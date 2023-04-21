@@ -1,0 +1,262 @@
+---
+title: "Impact of Digital Technologies"
+author: 
+  - Sarah Zhang
+thanks: "Code and data are available at: https://github.com/xyszhang/Impact-of-Digital-Technologies."
+date: "`r Sys.time()`"
+date-format: "D MMMM YYYY"
+abstract: "The rise of digital technologies, such as automation and artificial intelligence, has led to increased concerns about the future of jobs. While these technologies have the potential to increase efficiency and productivity, they also have the potential to displace workers and create new skill gaps. This paper explores the potential impact of digital technologies on the future of jobs in Canada, examining the likelihood of adoption by businesses and organizations, the challenges faced when incorporating these technologies, and the potential consequences for the labor market. Through analysis of existing research and data, the paper provides insights into the potential risks and benefits of digital technologies on the future of work."
+format: pdf
+number-sections: true
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+# Introduction
+
+The rapid pace of technological advancement has significantly transformed the nature of work in recent decades, and the trend is set to continue in the coming years. As digital technologies continue to evolve, there is a growing concern about their potential impact on the future of jobs. Some experts have predicted that automation and artificial intelligence will lead to significant job losses in certain sectors, with potentially dire consequences for workers and the broader economy. Research on the topic of the impact of digital technologies on jobs has been extensive and varied. Some studies have suggested that up to 47% of jobs in the US are at risk of being automated within the next two decades (Frey & Osborne, 2017), while others have predicted that new technologies will create more jobs than they displace (Bughin, Manyika, & Woetzel, 2017). There is also evidence to suggest that the impact of digital technologies on jobs will be highly variable depending on the industry, the type of job, and other factors (Autor & Salomons, 2018). The purpose of this paper is to contribute to the ongoing debate on the impact of digital technologies on the future of jobs. Specifically, we will use statistical modeling to analyze existing research on the topic and predict the potential impact of digital technologies on different industries and job types. We will also explore the potential benefits and risks associated with the adoption of new technologies and provide recommendations for policymakers and businesses to help mitigate the negative effects of technology on employment. Overall, this paper aims to provide a comprehensive analysis of the complex and multifaceted issue of the impact of digital technologies on jobs. By drawing on a range of empirical evidence and using rigorous statistical methods, we hope to shed new light on this critical issue and contribute to ongoing efforts to ensure a smooth and equitable transition to a digital future.
+
+# Data
+
+The data variables are all important in the analysis. REF_DATE helps to identify the timeframe for which the data is applicable, which is important for analyzing trends and changes over time. GEO helps to identify the location or region to which the data applies, which is important for analyzing differences across different regions or locations.
+
+DGUID can be used as a unique identifier for the data, which can be helpful for tracking the data's source or for cross-referencing with other datasets. Business.characteristics helps to provide context for the data, such as the size or industry of the business being studied. This can help in understanding how technology adoption varies across different types of businesses or industries.
+
+Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization provides insight into the types of technologies or innovations that the business or organization is planning to adopt or incorporate, which can be important for understanding the potential impact on their operations. UOM and UOM_ID help to standardize the units of measurement used for the data, which is important for ensuring consistency and accuracy in comparisons and analysis. SCALAR_FACTOR and SCALAR_ID may be used to adjust the data for scaling or to normalize it, which can be important for making meaningful comparisons across different types of data. VECTOR and COORDINATE help to identify the specific data series or category to which the data belongs, which is important for organizing and categorizing the data. VALUE is the actual data value for the row, which is the core information being analyzed. STATUS, SYMBOL, TERMINATED, and DECIMALS provide additional information about the data, such as its reliability, its units of measurement, and whether it has been terminated or discontinued. All of these factors are important for interpreting and analyzing the data effectively.
+
+To adopt the technologies, it is important to first understand them. Automation of Certain Tasks: Automation refers to the use of technology to perform certain tasks or processes automatically, without human intervention. This can include things like automated emails, chatbots, data entry and processing, and workflow automation. By automating repetitive or time-consuming tasks, businesses can save time and resources, increase efficiency, and reduce errors.
+
+Cloud Computing: Cloud computing refers to the delivery of computing resources, such as servers, storage, databases, and software, over the internet. Instead of owning and maintaining their own physical servers and infrastructure, businesses can use cloud-based services provided by third-party vendors, such as Amazon Web Services (AWS), Microsoft Azure, or Google Cloud Platform. This can offer benefits such as scalability, flexibility, cost savings, and ease of use.
+
+Collaboration Tools: Collaboration tools refer to software and platforms that enable people to work together on shared tasks or projects, regardless of their physical location. This can include tools like project management software, instant messaging apps, video conferencing software, and document collaboration tools. By using collaboration tools, businesses can increase productivity, facilitate communication and teamwork, and streamline project management.
+
+Digital Technology to Move Business Operations or Sales Online: This refers to the use of digital technology to enable businesses to move their operations or sales online. This can include setting up an e-commerce website or online store, using digital marketing tools to reach customers online, or implementing online payment systems. By moving their operations or sales online, businesses can expand their reach, improve customer convenience, and increase sales.
+
+# Exploratory Data Analysis
+
+The first step of analyzing data was exploring it to understand it better. Getting the descriptive statistics was the first analysis conducted. The minimum, maximum, mean and median values of numerical variables were obtained. The mode of non-numerical variables was also obtained. The next analysis was on the value count of the technologies to be adopted by businesses or organizations. The various types of technologies to be adopted were automation of certain tasks, cloud computing, collaboration tools and digital technology to move business operations or sales online (for purposes other than teleworking or remote working). 
+
+Another exploratory data analysis conducted was to evaluate how likely the technologies are to be adopted by businesses or organizations in Canada. According to the analysis, there were equal counts on the likelihood of adopting the technologies. On some organizations, it was likely to adopt the technologies, some were unlikely to while others were very likely to adopt them. The analysis also showed that there was equal probability on both occasions. It means that there is no significant difference in the probability of adopting those technologies between the different groups or scenarios being analyzed. This suggests that there is no clear pattern or trend indicating that certain industries are more or less likely to adopt cloud computing technology. In other words, when the values of different likelihood categories are equal, it suggests that the probability of adoption is not strongly influenced by the factors being analyzed, or that there may be other factors that are more important in determining whether or not a particular technology is adopted. 
+
+The process of incorporating technology has various challenges. Therefore, it was necessary to evaluate the likely challenges faced in this case. An analysis on the challenges faced while adopting technology in various businesses was conducted. Various businesses were evaluated and according to the analysis, more challenges were faced in various industries. The industries with more challenges were businesses that were 3 to 10 years old, agriculture, fishing, forestry and hunting industries. Other industries include mining, quarrying, and oil and gas extraction. 
+
+There could be several reasons why these industries face challenges in adopting technologies in businesses and organizations: 
+
+Traditional Practices: Some industries such as agriculture, fishing, forestry, and hunting have traditionally relied on manual labor and traditional methods of production. Therefore, the adoption of new technologies may require a significant change in the way things are done, which can be challenging for established businesses. 
+
+High Costs: The cost of adopting new technologies can be high, particularly for small and medium-sized businesses. This can be a major barrier to technology adoption, particularly in industries where profit margins are already low. 
+
+Lack of Infrastructure: In some cases, the lack of infrastructure, such as broadband internet access, can limit the ability of businesses to adopt new technologies. This is particularly true for businesses in remote or rural areas. 
+
+Businesses were also evaluated whether they use software or hardware using artificial intelligence. Some of the businesses that have adopted the technology are Manufacturing, Information and cultural industries, Finance and insurance, Retail trade, Wholesale trade and Construction. Others include Agriculture, forestry, fishing and hunting as well as Mining, quarrying, and oil and gas extraction. Manufacturing: Technology has transformed the manufacturing industry by automating many production processes, leading to increased efficiency and productivity. Technologies such as 3D printing and robotics have also enabled the creation of more complex and customizable products, while reducing costs.
+
+Information and cultural industries: Technology has revolutionized the way information and cultural content is created, distributed, and consumed. Digital platforms have enabled new forms of media, such as social media and streaming services, while also making it easier for creators to reach a global audience. 
+
+Finance and insurance: Technology has transformed the finance and insurance industries by enabling the development of online banking, mobile payments, and digital currencies. Fintech companies have also disrupted traditional banking and insurance models by offering innovative products and services. 
+
+Retail trade: Technology has transformed the retail industry by enabling online shopping and e-commerce, which has allowed retailers to reach a global audience and offer personalized shopping experiences. Technologies such as augmented reality and virtual reality are also transforming the way consumers shop and experience products.
+
+Wholesale trade: Technology has enabled more efficient supply chain management, enabling wholesalers to better manage inventory, streamline logistics, and reduce costs. Online marketplaces have also enabled wholesalers to reach a wider audience and offer more personalized services. 
+
+Construction: Technology is transforming the construction industry by enabling the use of 3D modeling, drones, and other technologies to improve project planning, design, and execution. New materials and building techniques are also being developed that can improve sustainability and reduce costs. 
+
+Agriculture, forestry, fishing and hunting: Technology is transforming these industries by enabling precision agriculture, which uses sensors, GPS, and other technologies to improve crop yields, reduce waste, and optimize resources. Technologies such as aquaculture and precision fishing are also transforming the fishing industry. 
+
+Mining, quarrying, and oil and gas extraction: Technology is transforming these industries by enabling more efficient and safer extraction techniques, such as hydraulic fracturing and directional drilling. Technologies such as automation and robotics are also transforming mining and quarrying operations, improving safety and productivity. Overall, technology has had a profound impact on many industries, transforming the way they operate, and creating new opportunities for growth and innovation. 
+
+Regulatory Environment: Some industries, such as agriculture and mining, are heavily regulated, which can make it difficult for businesses to adopt new technologies that may not be fully compliant with regulations. 
+
+Limited Access to Capital: Access to capital is critical for businesses to invest in new technologies. However, businesses in industries such as agriculture and forestry may have limited access to capital, making it difficult to invest in new technologies. Overall, the challenges faced by these industries in adopting new technologies are complex and multifaceted, and require a comprehensive approach to address them.
+
+# Model
+
+To achieve the research objective, a predictive modeling approach to build a decision tree model in was used. The data was first split into training and test sets using the first 800 rows for training and the remaining 200 rows for testing. The dependent variable was set as Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization and the independent variables were set as Business.characteristics. The decision tree model was built using the rpart function from the rpart package, and the method was set as "class" since we were
+11 predicting a categorical variable. The performance of the model was evaluated by calculating the accuracy of the predictions.
+
+# Results
+
+Various industries were investigated to evaluate the challenges faced when incorporating the different technologies. Some industries faced more challenges compared to others. In the analysis between construction and mining, mining seemed to have more challenges as shown.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r Load the data}
+df <- read.csv("technology.csv", header = TRUE, skip = 1)
+df1 <- read.csv("likelihood business.csv",  header = TRUE, skip = 1)
+df2 <- read.csv("challenges faced.csv",  header = TRUE, skip = 1)
+
+```
+
+```{r}
+library(dplyr)
+
+# Subset the dataset and remove missing values
+mydata_subset <- subset(df2, select = c("Business.characteristics", "VALUE"))
+#mydata_subset_clean <- na.omit(mydata_subset)
+
+# Aggregate the sum of values for each group
+mydata_agg <- aggregate(VALUE ~ Business.characteristics, data = mydata_subset, sum)
+
+# Sort the result in descending order
+mydata_agg_sorted <- mydata_agg[order(mydata_agg$VALUE, decreasing = TRUE),]
+
+# Calculate the percentages of each group's sum of values
+mydata_agg_sorted <- mutate(mydata_agg_sorted, percent = VALUE/sum(VALUE)*100)
+
+# Plot the result using ggplot2
+library(ggplot2)
+
+
+
+mydata_filtered <- mydata_agg_sorted %>%
+  filter(`Business.characteristics` %in% c("Business or organization type, all businesses or organizations", "Age of business or organization, 3 to 10 years old"))
+
+ggplot(mydata_filtered, aes(x = Business.characteristics, y = percent, fill = Business.characteristics)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Challenges Faced When Adopting or Incorporating Technologies by Industry",
+       y = "Percentage",
+       x = "Industry") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+
+
+
+There are several reasons why mining may experience more challenges than construction in adopting technologies: 
+
+- Remote and harsh environments: Mining operations are often located in remote and harsh environments, such as deserts, mountains, or deep underground, which makes it more challenging to implement and maintain technology infrastructure.
+
+- Safety concerns: Mining is a hazardous occupation with many risks involved, such as rock falls, underground gas explosions, and other accidents. Therefore, any technology used in mining must be safe and reliable to avoid potential risks to workers' health and safety.
+
+- Cost: Mining is a capital-intensive industry, and implementing new technologies can be costly. The initial investment in technology may be high, and there may be ongoing maintenance costs, which may deter some mining companies from adopting new technologies. 
+
+- Workforce training: New technologies may require specialized training for the workforce, and it can take time to train employees to use the technology effectively. This may cause disruption to ongoing mining operations, and there may be resistance from employees who are hesitant to learn new skills. 
+
+- Regulatory compliance: Mining companies must comply with various environmental and safety regulations, which may slow down the adoption of new technologies. Implementing new technology may require changes to current processes, and mining companies may need to obtain permits and approvals before deploying new technology.
+
+In contrast, construction sites are typically located in more accessible areas and have fewer safety concerns. Construction companies can more easily afford to implement new technology due to lower capital requirements, and workers are generally more adaptable to new technology. 
+
+There are more challenges faced in adopting technology by agriculture, forestry, fishing and hunting than ownership by visible minority, Korean industries.
+
+```{r}
+mydata_filtered <- mydata_agg_sorted %>%
+  filter(`Business.characteristics` %in% c("Ownership by visible minority, Korean", "Agriculture, forestry, fishing and hunting [11]"))
+
+ggplot(mydata_filtered, aes(x = Business.characteristics, y = percent, fill = Business.characteristics)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Challenges Faced When Adopting or Incorporating Technologies by Industry",
+       y = "Percentage",
+       x = "Industry") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+There are several reasons why agriculture, forestry, fishing, and hunting may face more challenges in adopting technology compared to visible minority-owned or Korean industries: 
+
+- Traditional methods and culture: Agriculture, forestry, fishing, and hunting are often deeply rooted in traditional methods and culture, which can make it difficult to adopt new technologies. Farmers and fishers may have generations of knowledge and experience in their practices and may be hesitant to change their methods. 
+
+- Limited resources: Many farmers, foresters, fishers, and hunters operate small businesses and may have limited resources to invest in new technologies. The cost of implementing new technologies can be prohibitively expensive for some, and they may not see a clear return on investment. 
+
+- Remote locations: Many farms, forests, and fishing grounds are located in remote areas, which can make it challenging to access and implement new technologies. This can be due to limited internet connectivity or access to power sources needed to run technology. 
+
+- Weather and environmental conditions: Agriculture, forestry, fishing, and hunting operations are highly dependent on weather and environmental conditions, which can make it challenging to implement and maintain new technologies. Extreme weather conditions and changing environmental factors can make it difficult to use some technologies. 
+
+- Government regulations and policies: Government regulations and policies can also create barriers to technology adoption in these industries. Regulations may restrict the use of certain technologies, or subsidies and incentives may be focused on other industries. 
+
+In contrast, visible minority-owned or Korean industries may have more access to resources and capital to invest in new technologies. Additionally, these industries may be more integrated into larger supply chains, making it easier to adopt new technologies and meet the requirements of larger customers.
+
+```{r}
+mydata_filtered <- mydata_agg_sorted %>%
+  filter(`Business.characteristics` %in% c("Construction [23]", "Mining, quarrying, and oil and gas extraction [21]"))
+
+ggplot(mydata_filtered, aes(x = Business.characteristics, y = percent, fill = Business.characteristics)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Challenges Faced When Adopting or Incorporating Technologies by Industry",
+       y = "Percentage",
+       x = "Industry") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+```
+
+Businesses and organizations of different types and ages face different sets of challenges when it comes to adopting new technologies. However, in general, it can be said that businesses or organizations of any type face more challenges than those that are 3 to 10 years old.
+
+Here are some reasons why:
+
+- Resistance to change: Established businesses or organizations may be resistant to change and reluctant to adopt new technologies that they perceive as disruptive or risky. This resistance can come from various stakeholders such as employees, customers, investors, and other partners.
+
+- Legacy systems: Older businesses or organizations may have legacy systems that are outdated and incompatible with newer technologies. These systems can be difficult to replace or upgrade, making it more challenging to integrate new technologies. 
+
+- Limited resources: Established businesses or organizations may have limited resources to invest in new technologies. They may have already invested heavily in existing systems and may not have the financial flexibility to make significant investments in new technologies. 
+
+- Organizational structure: Large and complex organizations may have a hierarchical structure and bureaucratic processes that can slow down decision-making and hinder the adoption of new technologies.
+
+On the other hand, businesses or organizations that are 3 to 10 years old may have some advantages when it comes to adopting new technologies. These advantages may include: 
+
+- Flexibility: Younger businesses or organizations may have fewer established processes and may be more willing to try new things, including new technologies. 
+
+- Digital-native: Startups and newer businesses or organizations may have been built with digital technologies in mind, giving them a head start in adopting new technologies. 
+
+- Less invested in legacy systems: Businesses or organizations that are younger may not have invested as heavily in legacy systems, making it easier for them to adopt new technologies without the need for significant changes to existing systems.
+
+In summary, while age can be a factor in the adoption of new technologies, it is not the only factor. The type of business or organization, as well as its organizational structure, resources, and attitudes toward change, can also play a significant role in the challenges it faces in adopting new technologies.
+
+# Discussion
+Based on the challenges faced by businesses in adopting new technologies in various industries, there are several recommendations that can be made to help address these issues: 
+
+- Provide Education and Training: One of the most effective ways to help businesses overcome the challenges of adopting new technologies is by providing education and training programs. This can help to ensure that businesses have the knowledge and skills they need to evaluate new technologies and to implement them effectively. This can be done through workshops, seminars, online courses, and other forms of training. 
+
+- Encourage Collaboration: Another important strategy is to encourage collaboration among businesses, governments, and other stakeholders. This can help to facilitate the sharing of knowledge and resources, and can help to create a supportive ecosystem for the adoption of new technologies. Collaboration can take many forms, such as partnerships, joint ventures, and industry associations. 
+
+- Address Infrastructure Gaps: In order to adopt new technologies, businesses need access to the necessary infrastructure, such as high-speed internet, transportation, and energy. Governments and other stakeholders can help to address infrastructure gaps by investing in new infrastructure, providing incentives for private investment, and partnering with businesses to address specific infrastructure challenges. 
+
+- Provide Financial Incentives: High costs are a major barrier to technology adoption, particularly for small and medium-sized businesses. Governments and other stakeholders can provide financial incentives, such as grants, tax breaks, and low-interest loans, to help offset the costs of adopting new technologies. This can help to make technology adoption more accessible and affordable for businesses. 
+
+- Simplify Regulations: Complex regulations can be a major challenge for businesses in adopting new technologies. Governments can help to simplify regulations by streamlining the regulatory process, providing clear guidelines, and working with businesses to address regulatory issues. This can help to reduce the regulatory burden and encourage more businesses to adopt new technologies. 
+
+- Promote Cultural Change: In some industries, there may be a cultural bias against new technologies. To address this, governments and other stakeholders can work to promote cultural change by highlighting the benefits of new technologies and by engaging with industry leaders and stakeholders to help change attitudes and beliefs.
+
+In conclusion, addressing the challenges faced by businesses in adopting new technologies will require a coordinated effort by governments, businesses, and other stakeholders. By providing education and training, encouraging collaboration, addressing infrastructure gaps, providing financial incentives, simplifying regulations, and promoting cultural change, we can help to create a more supportive environment for technology adoption and help businesses to thrive and remain competitive in the future.
+
+\newpage
+\appendix
+
+# Appendix 
+1. REF_DATE: This refers to the date for which the data in the row is applicable or the date on which the data was collected.
+2. GEO: This refers to the geographic location or region to which the data applies.
+3. DGUID: This refers to a unique identifier for the data or the organization that collected it.
+4. Business.characteristics: This likely refers to various characteristics of the business or organization being studied.
+5. Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization: This refers to the types of new technologies or innovations that the business or organization plans to adopt or incorporate in their operations.
+6. UOM: This refers to the unit of measurement used for the data in the row.
+7. UOM_ID: This refers to a unique identifier for the unit of measurement used.
+8. SCALAR_FACTOR: This refers to a scaling factor applied to the data in the row.
+9. SCALAR_ID: This refers to a unique identifier for the scaling factor used.
+10. VECTOR: This refers to a unique identifier for the data series or category to which the row belongs.
+11. COORDINATE: This refers to the specific coordinates or position of the data point within the data series.
+12. VALUE: This refers to the actual data value for the row.
+13. STATUS: This refers to the status of the data point, such as whether it is preliminary or final.
+14. SYMBOL: This refers to a symbol or code used to represent the data point.
+15. TERMINATED: This refers to whether the data series has been terminated or discontinued.
+16. DECIMALS: This refers to the number of decimal places used for the data value.
+
+\newpage
+
+# References
+Autor, D., & Salomons, A. (2018). Is automation labor share-displacing? Productivity growth, employment, and the labor share. Brookings Papers on Economic Activity, 2018(2), 1-63. 
+
+Bughin, J., Manyika, J., & Woetzel, J. (2017). A future that works: Automation, employment, and productivity. McKinsey Global Institute. 
+
+Frey, C. B., & Osborne, M. A. (2017). The future of employment: How susceptible are jobs to computerisation? Technological Forecasting and Social Change, 114, 254-280.
+
+R Core Team (2021). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria. URL https://www.R-project.org/.
