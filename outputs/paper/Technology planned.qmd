@@ -1,0 +1,294 @@
+---
+title: "Technology Planned"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Load the data}
+df <-read.csv("technology.csv", header = TRUE, skip = 1)
+df1 <- read.csv("likelihood business.csv",  header = TRUE, skip = 1)
+df2 <- read.csv("challenges faced.csv",  header = TRUE, skip = 1)
+
+```
+
+
+```{r}
+names(df)
+```
+
+```{r Libraries}
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(scales)
+
+```
+```{r Summary}
+summary (df)
+```
+
+
+```{r Count of values in a column} 
+table(df$Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization)
+```
+
+
+```{r  How business or organizations are likely to adopt automation}
+# Subset data to obtain canada data
+canada_data <- subset(df1, df1$GEO=="Canada")
+
+# Access the "likelihood" variable
+likelihood <- canada_data$Likelihood.business.or.organization.will.adopt.automation.and.digital.technologies.which.may.reduce.employment.hiring
+
+# Create a frequency table of the variable
+freqtable <- table(likelihood)
+
+# View the frequency table
+print(freqtable)
+
+# Create a bar plot of the frequency table
+barplot(freqtable, main = "Count of Values in likelihood", xlab = "Likelihood", ylab = "Count")
+
+```
+
+```{r Comparison between very likely and somewhat likely}
+# Subset the data to include only "very likely" and "somewhat likely" values
+subset <- likelihood[likelihood %in% c("Likelihood, very likely", "Likelihood, somewhat likely")]
+
+# Calculate the proportion of observations in the subset
+prop <- prop.table(table(subset))
+
+# Calculate the percentage of observations in the subset
+percent <- prop * 100
+
+# View the percentage
+print(percent)
+
+
+```
+
+```{r Challenges faced in incorporating technology per industry}
+library(dplyr)
+
+# Subset the dataset and remove missing values
+mydata_subset <- subset(df2, select = c("Business.characteristics", "VALUE"))
+#mydata_subset_clean <- na.omit(mydata_subset)
+
+# Aggregate the sum of values for each group
+mydata_agg <- aggregate(VALUE ~ Business.characteristics, data = mydata_subset, sum)
+
+# Sort the result in descending order
+mydata_agg_sorted <- mydata_agg[order(mydata_agg$VALUE, decreasing = TRUE),]
+
+# Calculate the percentages of each group's sum of values
+mydata_agg_sorted <- mutate(mydata_agg_sorted, percent = VALUE/sum(VALUE)*100)
+
+# Plot the result using ggplot2
+library(ggplot2)
+
+
+
+mydata_filtered <- mydata_agg_sorted %>%
+  filter(`Business.characteristics` %in% c("Business or organization type, all businesses or organizations", "Age of business or organization, 3 to 10 years old"))
+
+ggplot(mydata_filtered, aes(x = Business.characteristics, y = percent, fill = Business.characteristics)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Challenges Faced When Adopting or Incorporating Technologies by Industry",
+       y = "Percentage",
+       x = "Industry") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+
+
+```
+The industry that has all businesses or organization has more challenges than the industry that is 3 to 10 years old.
+
+```{r}
+mydata_filtered <- mydata_agg_sorted %>%
+  filter(`Business.characteristics` %in% c("Ownership by visible minority, Korean", "Agriculture, forestry, fishing and hunting [11]"))
+
+ggplot(mydata_filtered, aes(x = Business.characteristics, y = percent, fill = Business.characteristics)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Challenges Faced When Adopting or Incorporating Technologies by Industry",
+       y = "Percentage",
+       x = "Industry") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+
+```
+Agriculture, forestry, fishing and hunting will face more challenges than ownership by visible minority.
+
+```{r}
+mydata_filtered <- mydata_agg_sorted %>%
+  filter(`Business.characteristics` %in% c("Construction [23]", "Mining, quarrying, and oil and gas extraction [21]"))
+
+ggplot(mydata_filtered, aes(x = Business.characteristics, y = percent, fill = Business.characteristics)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Challenges Faced When Adopting or Incorporating Technologies by Industry",
+       y = "Percentage",
+       x = "Industry") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none")
+
+```
+Mining, quarrying and oil and gas extraction industry will face more challenges than construction industry.
+
+
+
+
+
+```{r EDA on technology planned to be adopted}
+
+# Convert the ref_date column to date format
+df$REF_DATE <- ymd(df$REF_DATE)
+
+
+# Filter the dataframe to include only Small, Medium, and Large businesses
+filtered_df <- df %>%
+  filter(Business.characteristics %in% c("Construction [23]", "Mining, quarrying, and oil and gas extraction [21]"))
+
+# Explore the distribution of technology adoption
+tech_counts <- filtered_df %>% 
+  group_by(Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count))
+
+# Create a bar plot to visualize the technology distribution
+ggplot(tech_counts, aes(x=Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization, y=count)) +
+  geom_bar(stat="identity", fill="#6c9aeb") +
+  theme_minimal() +
+  labs(title="Distribution of Technology Adoption",
+       x="Technology Planned to be Adopted",
+       y="Count")
+
+# Explore the relationship between technology adoption and geographical location
+geo_counts <- filtered_df %>% 
+  group_by(GEO, Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count))
+
+# Create a stacked bar plot to visualize the relationship between technology adoption and geographical location
+ggplot(geo_counts, aes(x=GEO, y=count, fill=Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization)) +
+  geom_bar(stat="identity") +
+  theme_minimal() +
+  labs(title="Technology Adoption by Geographical Location",
+       x="Geographical Location",
+       y="Count",
+       fill="Technology Planned to be Adopted") +
+  guides(fill=guide_legend(title="Technology Planned to be Adopted"))
+
+# Explore the relationship between technology adoption and business characteristics
+bus_counts <- filtered_df %>% 
+  group_by(Business.characteristics, Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count))
+
+# Create a stacked bar plot to visualize the relationship between technology adoption and business characteristics
+ggplot(bus_counts, aes(x=Business.characteristics, y=count, fill=Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization)) +
+  geom_bar(stat="identity") +
+  theme_minimal() +
+  labs(title="Technology Adoption by Business Characteristics",
+       x="Business Characteristics",
+       y="Count",
+       fill="Technology Planned to be Adopted") +
+  guides(fill=guide_legend(title="Technology Planned to be Adopted"))
+# Explore the relationship between technology adoption and geographical location for Canada only
+canada_geo_counts <- df %>% 
+  filter(GEO == "Canada") %>%
+  group_by(GEO, Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count))
+
+# Create a stacked bar plot to visualize the relationship between technology adoption and geographical location for Canada only
+ggplot(canada_geo_counts, aes(x=GEO, y=count, fill=Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization)) +
+  geom_bar(stat="identity") +
+  theme_minimal() +
+  labs(title="Technology Adoption by Geographical Location in Canada",
+       x="Geographical Location",
+       y="Count",
+       fill="Technology Planned to be Adopted") +
+  guides(fill=guide_legend(title="Technology Planned to be Adopted"))
+
+# Explore the relationship between technology adoption and business characteristics for Canada only
+canada_bus_counts <- df %>% 
+  filter(GEO == "Canada") %>%
+  group_by(Business.characteristics, Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization) %>% 
+  summarise(count=n()) %>% 
+  arrange(desc(count))
+
+# Create a stacked bar plot to visualize the relationship between technology adoption and business characteristics for Canada only
+ggplot(canada_bus_counts, aes(x=Business.characteristics, y=count, fill=Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization)) +
+  geom_bar(stat="identity") +
+  theme_minimal() +
+  labs(title="Technology Adoption by Business Characteristics in Canada",
+       x="Business Characteristics",
+       y="Count",
+       fill="Technology Planned to be Adopted") +
+  guides(fill=guide_legend(title="Technology Planned to be Adopted"))
+
+```
+
+```{r Subset}
+ai_data <- subset(df, Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization == "Software or hardware using artificial intelligence")
+ai_data
+```
+
+```{r Business characteristics}
+table(ai_data$Business.characteristics)
+
+```
+
+```{r Areas incorporating AI}
+table(ai_data$GEO)
+
+```
+
+```{r  Industries most invested in software or hardware using artificial}
+# Subset the data to only include rows where software or hardware using AI is planned to be adopted
+ai_data <- subset(df, Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization == "Software or hardware using artificial intelligence")
+
+# Use aggregate to group the data by industry and calculate the percentage of businesses within each industry planning to adopt AI technology
+ai_by_industry <- aggregate(ai_data$VALUE, list(ai_data$Business.characteristics), FUN = function(x) sum(x > 0) / length(x) * 100)
+
+# Rename the columns
+names(ai_by_industry) <- c("Industry", "Percentage")
+
+# Sort the data by percentage in descending order
+ai_by_industry <- ai_by_industry[order(-ai_by_industry$Percentage), ]
+
+# Print the top 10 industries
+head(ai_by_industry, 10)
+
+```
+
+```{r What are the industries most invested in other technologies}
+# Define a vector of technology categories to exclude
+exclude_categories <- c("Software or hardware using artificial intelligence", "Technology planned to be adopted or incorporated by the business or organization, none")
+
+# Subset the data to exclude the specified technology categories
+other_tech_data <- subset(df, !(Technology.planned.to.be.adopted.or.incorporated.by.the.business.or.organization %in% exclude_categories))
+
+# Use aggregate to group the data by industry and calculate the percentage of businesses within each industry planning to adopt other technology
+other_tech_by_industry <- aggregate(other_tech_data$VALUE, list(other_tech_data$Business.characteristics), FUN = function(x) sum(x > 0) / length(x) * 100)
+
+# Rename the columns
+names(other_tech_by_industry) <- c("Industry", "Percentage")
+
+# Sort the data by percentage in descending order
+other_tech_by_industry <- other_tech_by_industry[order(-other_tech_by_industry$Percentage), ]
+
+# Print the top 10 industries
+head(other_tech_by_industry, 10)
+
+```
+
+
+
+
